@@ -1,2 +1,3 @@
 /finetune/gemma_model
 /finetune/gemma_tokenizer
+.env
