@@ -1,3 +1,6 @@
 /finetune/gemma_model
 /finetune/gemma_tokenizer
 .env
+/chunks
+/finetune/gemma
+/finetune/gemma_finetuned
