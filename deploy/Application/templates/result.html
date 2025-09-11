@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>getKural.ai</title>
+<style>
+    /* avoid layout shifts when borders are toggled */
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f9fafb, #eef2f3);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3f51b5;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.brand:hover {
+    color: #1a237e;
+}
+
+
+    .container {
+        display: flex;
+        gap: 25px;
+        padding: 40px;
+        animation: fadeIn 0.8s ease-in-out;
+        max-width: 1400px;
+        margin: auto;
+        min-height: 100vh;
+    }
+
+    /* Left Section */
+    .left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 300px;          /* keep left column stable */
+        max-width: 360px;
+    }
+
+    .random-text {
+        background: linear-gradient(135deg, #3f51b5, #5a6fd6);
+        padding: 18px 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.6rem;         /* fixed size */
+        color: #fff;
+        letter-spacing: 0.5px;
+    }
+
+    .highlight-text {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .submit-area {
+        margin-top: 12px;
+    }
+
+    .which-text {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .submit-btn {
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        background: #3f51b5;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+    }
+    .submit-btn:hover { background: #2e3c9e; }
+
+    .thank-you {
+        display: none;
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+    .thank-you h2 { color: #2e7d32; margin: 0 0 6px 0; }
+
+    /* Right Section */
+    .right {
+        flex: 2;
+        display: flex;
+        gap: 25px;
+    }
+
+    /* Each response card (click box to select) */
+    .paragraph {
+        flex: 1;
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: box-shadow 0.2s ease, transform 0.18s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        cursor: pointer;                      /* clicking card selects */
+        border: 3px solid transparent;        /* IMPORTANT: transparent border prevents layout shift */
+    }
+    .paragraph:hover {
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        transform: translateY(-3px);
+    }
+    .paragraph.selected {
+        border-color: #3f51b5;                /* visible selection without layout jump */
+    }
+    .paragraph.locked { cursor: default; }   /* after submit */
+
+    .paragraph h3 {
+        font-size: 1.15rem;
+        margin: 0 0 6px 0;
+        color: #3f51b5;
+        border-bottom: 2px solid #eaeaea;
+        padding-bottom: 6px;
+    }
+
+    .kural {
+        font-weight: 700;
+        font-size: 1rem;
+        color: #222;
+        cursor: pointer;     /* clicking kural toggles details */
+        padding: 6px 8px;
+        border-radius: 6px;
+    }
+    .kural:hover { background: #fbfbfd; }
+
+    .details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.36s ease, padding 0.22s ease;
+        font-size: 0.95rem;
+        line-height: 1.45;
+        color: #555;
+        margin-left: 6px;
+        border-left: 3px solid #3f51b5;
+        background: #fafafa;
+        border-radius: 8px;
+    }
+    .details.open { padding: 10px; max-height: 640px; } /* expanded */
+    .details p { margin: 6px 0; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left side -->
+    <div class="left">
+        <a href=""class="brand">GetKural.ai</a>
+
+
+
+        <div>
+            
+        </div>
+        <div>
+            <div class="highlight-text">Here are the best results for your keyword : {{ name }}</div>
+        </div>
+        
+        
+
+        <!-- Preference area -->
+        <form id="preferenceForm" class="submit-area">
+            <div class="which-text">Which preference do you prefer?</div>
+            <!-- hidden input to store selected response -->
+            <input type="hidden" id="selectedPreference" name="preference" required>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <!-- Thank you shown after successful submit -->
+        <div class="thank-you" id="thankYouMessage">
+            <h2>Thank You!</h2>
+            <p>Your preference has been recorded successfully.</p>
+        </div>
+    </div>
+
+    <!-- Right side: two response cards -->
+    <div class="right">
+        <!-- Response 1 card -->
+        <div class="paragraph" data-response="response1" role="button" tabindex="0">
+            <h3>Response 1</h3>
+
+            <!-- Clicking kural toggles details; toggleDetails stops propagation so card click won't fire -->
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t1 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m1 }}</p>
+                <p><strong>Kural ID:</strong> {{ id1 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit1 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram1 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal1 }}</p>
+                <p><strong>Porul:</strong> {{ porul1 }}</p>
+            </div>
+
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t2 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m2 }}</p>
+                <p><strong>Kural ID:</strong> {{ id2 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit2 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram2 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal2 }}</p>
+                <p><strong>Porul:</strong> {{ porul2 }}</p>
+            </div>
+
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t3 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m3 }}</p>
+                <p><strong>Kural ID:</strong> {{ id3 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit3 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram3 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal3 }}</p>
+                <p><strong>Porul:</strong> {{ porul3 }}</p>
+            </div>
+        </div>
+
+        <!-- Response 2 card -->
+        <div class="paragraph" data-response="response2" role="button" tabindex="0">
+            <h3>Response 2</h3>
+
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t1 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m1 }}</p>
+                <p><strong>Kural ID:</strong> {{ id1 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit1 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram1 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal1 }}</p>
+                <p><strong>Porul:</strong> {{ porul1 }}</p>
+            </div>
+
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t2 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m2 }}</p>
+                <p><strong>Kural ID:</strong> {{ id2 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit2 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram2 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal2 }}</p>
+                <p><strong>Porul:</strong> {{ porul2 }}</p>
+            </div>
+
+            <div class="kural" onclick="toggleDetails(event, this)">{{ t3 }}</div>
+            <div class="details" onclick="event.stopPropagation()">
+                <p><strong>Meaning:</strong> {{ m3 }}</p>
+                <p><strong>Kural ID:</strong> {{ id3 }}</p>
+                <p><strong>Transliteration:</strong> {{ translit3 }}</p>
+                <p><strong>Adhigaram:</strong> {{ adhigaram3 }}</p>
+                <p><strong>Iyal:</strong> {{ iyal3 }}</p>
+                <p><strong>Porul:</strong> {{ porul3 }}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Toggle details: stop propagation so clicking the kural/details DOES NOT select preference
+    function toggleDetails(e, el) {
+        e.stopPropagation();
+        const details = el.nextElementSibling;
+        details.classList.toggle('open');
+    }
+
+    const responseBoxes = document.querySelectorAll('.paragraph');
+    const hiddenInput = document.getElementById('selectedPreference');
+    let isSubmitted = false;
+
+    // Click on card selects preference (unless submitted). Use keyboard support (Enter/Space).
+    responseBoxes.forEach(box => {
+        // mouse click
+        box.addEventListener('click', function () {
+            if (isSubmitted) return;
+            selectBox(this);
+        });
+
+        // keyboard (Space / Enter)
+        box.addEventListener('keydown', function (evt) {
+            if (isSubmitted) return;
+            if (evt.key === 'Enter' || evt.key === ' ') {
+                evt.preventDefault();
+                selectBox(this);
+            }
+        });
+    });
+
+    function selectBox(box) {
+        responseBoxes.forEach(b => b.classList.remove('selected'));
+        box.classList.add('selected');
+        hiddenInput.value = box.dataset.response;
+    }
+
+    // Submit handler: lock selection so user cannot change it afterwards
+    document.getElementById('preferenceForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!hiddenInput.value) {
+            alert('Please select a response first!');
+            return;
+        }
+
+        isSubmitted = true;
+
+        // Visual locked state
+        responseBoxes.forEach(b => b.classList.add('locked'));
+
+        // Optionally show which one was selected clearly (keeps selected class)
+        // hide submit area and show thank you
+        document.getElementById('preferenceForm').style.display = 'none';
+        document.getElementById('thankYouMessage').style.display = 'block';
+
+        // If you are sending to server, here you can do fetch/ajax with hiddenInput.value
+        // Example: sendChoice(hiddenInput.value)
+    });
+</script>
+</body>
+</html>
