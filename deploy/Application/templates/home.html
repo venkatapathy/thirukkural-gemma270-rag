@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout Structure</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        gap: 20px;
+        padding: 30px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Left Section */
+    .left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .random-text {
+        background: #f69605ff;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .random-text:hover {
+        transform: scale(1.05);
+    }
+
+    .text-line {
+        margin-top: auto; /* Push to bottom */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .text-input {
+        width: 90%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 2px solid #b39ddb;
+        outline: none;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .text-input:focus {
+        border-color: #7e57c2;
+        box-shadow: 0px 4px 12px rgba(126, 87, 194, 0.3);
+    }
+
+    /* Right Section */
+    .right {
+        flex: 2;
+        display: flex;
+        gap: 20px;
+    }
+
+    .paragraph {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        min-height: 450px; /* Taller height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .paragraph:hover {
+        box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+        transform: translateY(-5px);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left section -->
+    <div class="left">
+        <div class="random-text">getKural.ai</div>
+        <div class="text-line">
+            <input type="text" class="text-input" placeholder="Enter text here...">
+        </div>
+    </div>
+
+    <!-- Right section -->
+    <div class="right">
+        <div class="paragraph">
+            <h3>Response 1</h3>
+            <p>T1</p>
+            <p>Meaning</p>
+            <p>T2</p>
+            <p>Meaning</p>
+            <p>T3</p>
+            <p>Meaning</p>
+        </div>
+        <div class="paragraph">
+            <h3>Response 2</h3>
+            <p>T1</p>
+            <p>Meaning</p>
+            <p>T2</p>
+            <p>Meaning</p>
+            <p>T3</p>
+            <p>Meaning</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
