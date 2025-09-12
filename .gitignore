@@ -1,6 +1,6 @@
-/finetune/gemma_model
-/finetune/gemma_tokenizer
+/finetune/finetuned_1
+/finetune/finetuned_2
+/finetune/finetuned_3
 .env
 /chunks
-/finetune/gemma
-/finetune/gemma_finetuned
+/data/ground_checked.json
