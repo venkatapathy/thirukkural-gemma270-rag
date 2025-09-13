@@ -1,6 +1,7 @@
 /finetune/finetuned_1
 /finetune/finetuned_2
 /finetune/finetuned_3
+/finetune/sft
 .env
 /chunks
 /data/ground_checked.json

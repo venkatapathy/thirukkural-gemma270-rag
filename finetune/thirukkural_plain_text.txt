@@ -1,3 +1,13 @@
+# Thirukkural Dataset – Ancient Tamil couplets about life, virtue, wealth, and love which is written by thiruvalluvar.
+# Each entry contains the couplet in Tamil, its English translation, Hindi translation, and an explanation in English.
+# The model is trained to learn this structured format for Thirukkural knowledge.
+# Example format:
+# <kural_id>: 1
+# Tamil: ...
+# English: ...
+# Hindi: ...
+# Explanation: ...
+
 <kural_id>: 1
 Tamil: அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு
 English: A is the starting-point of the world of sound: even so is the Ancient one Supreme the starting-point of all that exists.
