@@ -5,3 +5,4 @@
 .env
 /chunks
 /data/ground_checked.json
+/finetune/ift
