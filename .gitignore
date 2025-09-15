@@ -6,3 +6,6 @@
 /chunks
 /data/ground_checked.json
 /finetune/ift
+/finetune/sft_colab
+/finetune/sft_light
+/finetune/finetune_for_retrieval
