@@ -9,3 +9,5 @@
 /finetune/sft_colab
 /finetune/sft_light
 /finetune/finetune_for_retrieval
+# Ignore model weights
+*.safetensors
