@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Fine-tuning parameters for Thirukkural
 model_name_or_path: "meta-llama/Llama-2-7b-hf"
 dataset_path: "data/thirukkural_dataset.json"
@@ -19,4 +20,27 @@ fp16: false
 bfloat16: true
 
 output_dir: "./outputs/thirukkural_lora"
+=======
+# Fine-tuning parameters for Thirukkural
+model_name_or_path: "meta-llama/Llama-2-7b-hf"
+dataset_path: "data/thirukkural_dataset.json"
+
+# LoRA specific parameters
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"] # Common layers to apply LoRA to
+
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 0.0002
+num_train_epochs: 3
+max_steps: -1
+save_steps: 50
+logging_steps: 10
+fp16: false
+bfloat16: true
+
+output_dir: "./outputs/thirukkural_lora"
+>>>>>>> upstream/main
 report_to: "wandb"

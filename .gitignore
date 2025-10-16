@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /finetune/finetuned_1
 /finetune/finetuned_2
 /finetune/finetuned_3
@@ -11,3 +12,13 @@
 /finetune/finetune_for_retrieval
 # Ignore model weights
 *.safetensors
+=======
+/finetune/finetuned_1
+/finetune/finetuned_2
+/finetune/finetuned_3
+/finetune/sft
+.env
+/chunks
+/data/ground_checked.json
+/finetune/ift
+>>>>>>> upstream/main

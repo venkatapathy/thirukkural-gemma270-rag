@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,3 +135,141 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>getKural</title>
+</head>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #eef2f3, #f9fafb);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #333;
+    position: relative;
+  }
+
+  /* Top-left clickable text slightly shifted */
+  .header {
+    position: absolute;
+    top: 35px;   /* moved down 15px */
+    left: 35px;  /* moved right 15px */
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #3f51b5;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .header:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Container slightly pushed down */
+  .container {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 35px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.6s ease-out;
+    text-align: center;
+    margin-top: 60px; /* pushes the container down */
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3f51b5;
+    margin-bottom: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    transition: 0.3s;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #3f51b5;
+    box-shadow: 0 0 0 4px rgba(63,81,181,0.15);
+  }
+
+  button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3f51b5, #5a6fd6);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2e3c9e, #4a5acc);
+    transform: translateY(-2px);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+</style>
+
+</head>
+<body>
+
+<!-- Top-left clickable text -->
+<div class="header" onclick="window.location.reload()">getKural.ai</div>
+
+<div class="container">
+  <h1>Search Keyword</h1>
+  <form method="POST" id="userForm">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="name">Enter a keyword</label>
+      <input type="text" id="name" name="name" placeholder="Type here..." required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+</body>
+</html>
+>>>>>>> upstream/main
